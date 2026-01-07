@@ -6,7 +6,7 @@ RUN apt-get update \
     && apt -y install --no-install-recommends \
     python3 \
     curl \
-    ca-certificates \
+    ca-certificates
 
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt - install nodejs

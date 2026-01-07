@@ -27,11 +27,11 @@ RUN npm install -g @peertube/peertube-runner@0.4.0
 RUN rm -rf /var/lib/apt/lists/*
 
 # Install ffmpeg with NVIDIA support
-RUN cd /home/runner \
+RUN cd /tmp \
     && git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git \
     && cd nv-codec-headers \
     && make install
-RUN cd /home/runner \
+RUN cd /tmp \
     && git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/ \
     && cd ffmpeg \
     && ./configure --enable-nonfree --enable-cuda-nvcc --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --disable-static --enable-shared \

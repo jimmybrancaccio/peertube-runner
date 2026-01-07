@@ -1,53 +1,18 @@
-FROM nvidia/cuda:13.0.2-cudnn-runtime-ubuntu24.04
+FROM jrottenberg/ffmpeg:8.0.1-nvidia2404
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt -y install --no-install-recommends \
-    autoconf \
-    automake \
-    build-essential \
-    ca-certificates \
-    cmake \
-    curl \
-    git-core \
-    libfdk-aac-dev \
-    libc6 \
-    libc6-dev \
-    libnuma1 \
-    libnuma-dev \
-    libtool \
-    libx264-dev \
-    libx265-dev \
-    meson \
-    nasm \
-    ninja-build \
-    pkg-config \
     python3 \
-    python3-pip \
-    texinfo \
-    unzip \
-    wget \
-    yasm \
-    zlib1g-dev
+    curl \
+    ca-certificates \
 
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt - install nodejs
 
 RUN npm install -g @peertube/peertube-runner@0.4.0
 RUN rm -rf /var/lib/apt/lists/*
-
-# Install ffmpeg with NVIDIA support
-RUN cd /tmp \
-    && git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git \
-    && cd nv-codec-headers \
-    && make install
-RUN cd /tmp \
-    && git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/ \
-    && cd ffmpeg \
-    && ./configure --enable-gpl --enable-gnutls --enable-cuda-nvcc --enable-libnpp --enable-libx264 --enable-libx265 --enable-nonfree --nvccflags="-gencode arch=compute_52,code=sm_52 -O2" --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --disable-static --enable-shared \
-    && make -j 8 \
-    && make install
 
 # Copy and set permissions as root before switching user
 COPY start.sh /home/runner/start.sh

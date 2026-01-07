@@ -4,22 +4,39 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt -y install --no-install-recommends \
-    python3 \
-    python3-pip \
-    curl \
-    ca-certificates \
-    git \
+    autoconf \
+    automake \
     build-essential \
-    yasm \
-    yasm-dev \
+    ca-certificates \
     cmake \
-    libtool \
+    curl \
+    git-core \
+    libass-dev \
     libc6 \
     libc6-dev \
+    libfreetype6-dev \
+    libgnutls28-dev \
+    libmp3lame-dev \
+    libnuma1 \
+    libnuma-dev \
+    libsdl2-dev \
+    libtool \
+    libva-dev \
+    libvdpau-dev \
+    libvorbis-dev \
+    libxcb1-dev \
+    libxcb-shm0-dev \
+    libxcb-xfixes0-dev \
+    meson \
+    ninja-build \
+    pkg-config \
+    python3 \
+    python3-pip \
+    texinfo \
     unzip \
     wget \
-    libnuma1 \
-    libnuma-dev
+    yasm \
+    zlib1g-dev
 
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt - install nodejs

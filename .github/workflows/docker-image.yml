@@ -13,6 +13,8 @@ env:
   DOCKERFILE: Dockerfile
   DOCKER_NAMESPACE: jimmyb
   DOCKER_IMAGE_NAME: peertube-runner-gpu
+  CUSTOM_REGISTRY_URL: registry.linuxbox.ninja
+  CUSTOM_REGISTRY_USERNAME: jimmy
 
 jobs:
   push_to_registry:
@@ -63,8 +65,8 @@ jobs:
       - name: login to custom Docker registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ secrets.CUSTOM_REGISTRY_URL }}
-          username: ${{ secrets.CUSTOM_REGISTRY_USERNAME }}
+          registry: ${{ env.CUSTOM_REGISTRY_URL }}
+          username: ${{ env.CUSTOM_REGISTRY_USERNAME }}
           password: ${{ secrets.CUSTOM_REGISTRY_PASSWORD }}
 
       - name: build and push docker image to custom registry
@@ -73,6 +75,6 @@ jobs:
           context: ${{ env.CONTEXT_DIR }}
           push: true
           tags: |
-            ${{ secrets.CUSTOM_REGISTRY_URL }}/${{ secrets.CUSTOM_REGISTRY_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.RUNNER_VERSION }}
-            ${{ secrets.CUSTOM_REGISTRY_URL }}/${{ secrets.CUSTOM_REGISTRY_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+            ${{ env.CUSTOM_REGISTRY_URL }}/${{ env.CUSTOM_REGISTRY_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.RUNNER_VERSION }}
+            ${{ env.CUSTOM_REGISTRY_URL }}/${{ env.CUSTOM_REGISTRY_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
           file: ${{ env.DOCKERFILE }}

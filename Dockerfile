@@ -11,7 +11,7 @@ RUN apt-get update \
     git \
     build-essential \
     yasm \
-    yasm-devel \
+    yasm-dev \
     cmake \
     libtool \
     libc6 \

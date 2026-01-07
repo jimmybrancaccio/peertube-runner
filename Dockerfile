@@ -11,23 +11,16 @@ RUN apt-get update \
     cmake \
     curl \
     git-core \
-    libass-dev \
+    libfdk-aac-dev \
     libc6 \
     libc6-dev \
-    libfreetype6-dev \
-    libgnutls28-dev \
-    libmp3lame-dev \
     libnuma1 \
     libnuma-dev \
-    libsdl2-dev \
     libtool \
-    libva-dev \
-    libvdpau-dev \
-    libvorbis-dev \
-    libxcb1-dev \
-    libxcb-shm0-dev \
-    libxcb-xfixes0-dev \
+    libx264-dev \
+    libx265-dev \
     meson \
+    nasm \
     ninja-build \
     pkg-config \
     python3 \
@@ -52,7 +45,7 @@ RUN cd /tmp \
 RUN cd /tmp \
     && git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/ \
     && cd ffmpeg \
-    && ./configure --enable-nonfree --enable-cuda-nvcc --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --disable-static --enable-shared \
+    && ./configure --enable-gpl --enable-gnutls --enable-cuda-nvcc --enable-libnpp --enable-libx264 --enable-libx265 --enable-nonfree --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --disable-static --enable-shared \
     && make -j 8 \
     && make install
 

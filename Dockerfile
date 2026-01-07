@@ -45,7 +45,7 @@ RUN cd /tmp \
 RUN cd /tmp \
     && git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/ \
     && cd ffmpeg \
-    && ./configure --enable-gpl --enable-gnutls --enable-cuda-nvcc --enable-libnpp --enable-libx264 --enable-libx265 --enable-nonfree --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --disable-static --enable-shared \
+    && ./configure --enable-gpl --enable-gnutls --enable-cuda-nvcc --enable-libnpp --enable-libx264 --enable-libx265 --enable-nonfree --nvccflags="-gencode arch=compute_52,code=sm_52 -O2" --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --disable-static --enable-shared \
     && make -j 8 \
     && make install
 

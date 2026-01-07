@@ -12,7 +12,7 @@ RUN pip3 install --no-cache-dir \
         ctranslate2==4.6.0 \
         whisper-ctranslate2==0.5.3
 
-RUN npm install -g @peertube/peertube-runner
+RUN npm install -g @peertube/peertube-runner@0.4.0
 RUN rm -rf /var/lib/apt/lists/*
 
 # Copy and set permissions as root before switching user

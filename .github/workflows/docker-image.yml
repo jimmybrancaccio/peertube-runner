@@ -9,8 +9,9 @@ on:
 env:
   CONTEXT_DIR: .
   IMAGE_TAG: v1.0
+  RUNNER_VERSION: 0.4.0
   DOCKERFILE: Dockerfile
-  DOCKER_NAMESPACE: bvdcode
+  DOCKER_NAMESPACE: jimmyb
   DOCKER_IMAGE_NAME: peertube-runner-gpu
 
 jobs:
@@ -38,7 +39,7 @@ jobs:
           context: ${{ env.CONTEXT_DIR }}
           push: true
           tags: |
-            ${{ env.DOCKER_NAMESPACE }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            ${{ env.DOCKER_NAMESPACE }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.RUNNER_VERSION }}
             ${{ env.DOCKER_NAMESPACE }}/${{ env.DOCKER_IMAGE_NAME }}:latest
           file: ${{ env.DOCKERFILE }}
 
@@ -55,6 +56,23 @@ jobs:
           context: ${{ env.CONTEXT_DIR }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.RUNNER_VERSION }}
             ghcr.io/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+          file: ${{ env.DOCKERFILE }}
+
+      - name: login to custom Docker registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.CUSTOM_REGISTRY_URL }}
+          username: ${{ secrets.CUSTOM_REGISTRY_USERNAME }}
+          password: ${{ secrets.CUSTOM_REGISTRY_PASSWORD }}
+
+      - name: build and push docker image to custom registry
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ env.CONTEXT_DIR }}
+          push: true
+          tags: |
+            ${{ secrets.CUSTOM_REGISTRY_URL }}/${{ env.CUSTOM_REGISTRY_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.RUNNER_VERSION }}
+            ${{ secrets.CUSTOM_REGISTRY_URL }}/${{ env.CUSTOM_REGISTRY_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
           file: ${{ env.DOCKERFILE }}

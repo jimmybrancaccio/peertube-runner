@@ -19,9 +19,9 @@ COPY start.sh /home/runner/start.sh
 RUN chmod +x /home/runner/start.sh
 
 # Rename ffmpeg, copy ffmpeg wrapper and set permissions
-RUN mv /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg-real
-COPY ffmpeg.sh /usr/local/bin/ffmpeg
-RUN chmod +x /usr/local/bin/ffmpeg
+# RUN mv /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg-real
+# COPY ffmpeg.sh /usr/local/bin/ffmpeg
+# RUN chmod +x /usr/local/bin/ffmpeg
 
 # Create user and switch
 RUN useradd -ms /bin/bash runner
